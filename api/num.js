@@ -1,8 +1,8 @@
-import fetch from "node-fetch";
+const axios = require("axios");
 
-const VALID_KEYS = ["saiyanekam"]; // add your keys
+const VALID_KEYS = ["saiyanekam"];
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   const { key, term } = req.query;
 
   if (!key || !VALID_KEYS.includes(key)) {
@@ -20,12 +20,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const apiRes = await fetch(
+    const response = await axios.get(
       `https://osintx.info/API/krobetahack.php?key=P6NW6D1&type=mobile&term=${term}`
     );
-    const data = await apiRes.json();
 
-    // Add custom owner field
+    let data = response.data;
+
     if (data.data && Array.isArray(data.data)) {
       data.data = data.data.map(item => ({
         ...item,
@@ -33,12 +33,12 @@ export default async function handler(req, res) {
       }));
     }
 
-    return res.status(200).json(data);
+    res.json(data);
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({
+    console.error("API Error:", err.response?.data || err.message);
+    res.status(500).json({
       success: false,
       message: "Something went wrong"
     });
   }
-}
+};
