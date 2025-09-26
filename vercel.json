@@ -1,11 +1,10 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/num.js", "use": "@vercel/node" }
+    { "src": "index.js", "use": "@vercel/node" }
   ],
-  "routes": [
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/api/num", "dest": "/api/num.js" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.js" }
   ]
 }
+
