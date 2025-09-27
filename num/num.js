@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-// Just an array of valid keys - simple!
+// Simple array of valid keys
 const validKeys = ['saiyanekam', 'businesskey', 'testkey', 'vipclient'];
 
 export default async function handler(req, res) {
